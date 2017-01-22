@@ -1,6 +1,7 @@
 import { DropBoxRestClient } from "./../RestClient/DropBoxRestClient";
 import { ICloudStorageRestClient } from "./../RestClient/ICloudStorageRestClient";
 import { ActionsHub, FolderContent } from './../ActionCreators/ActionsHub'
+import { StoresHub } from './../Stores/StoresHub';
 
 export class AuthenticateActionCreator {
     private _cloudStorageRestClient: ICloudStorageRestClient;
@@ -14,13 +15,13 @@ export class AuthenticateActionCreator {
     }
 
     public getInitialDropBoxData() : void {
+        let rootFolder: FolderContent = StoresHub.getInstance().getExplorerStore().getState().rootFolder;
         let restClient = this.getCloudStorageRestClient();
-        restClient.getFolderContents("/").then(
+        restClient.getFolderContents(rootFolder).then(
             (folderContent: FolderContent) => {
-                // Invoke folder contents changed action with path of folder opened and contents of the folder.
-                // It will result in Explorer store emitting the change and that will cause the Explorer Component update itself.
                 let actions = ActionsHub.getInstance().getActions();
-                actions.folderContentsChangedAction(folderContent);
+                actions.folderSelectionChangedAction(folderContent);
+                actions.folderExpandedAction(folderContent);
             }
         );
     }

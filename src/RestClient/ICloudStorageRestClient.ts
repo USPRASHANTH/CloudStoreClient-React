@@ -3,5 +3,5 @@ import { FolderContent } from "./../ActionCreators/ActionsHub"
 
 export interface ICloudStorageRestClient {
   uploadFile(path: string): void;
-  getFolderContents(path: string): Promise<FolderContent>;
+  getFolderContents(folder: FolderContent): Promise<FolderContent>;
 }

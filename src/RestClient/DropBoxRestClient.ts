@@ -26,7 +26,7 @@ export class DropBoxRestClient implements ICloudStorageRestClient {
    }
 
    // https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder
-   public getFolderContents(path: string): Q.Promise<FolderContent>
+   public getFolderContents(folder: FolderContent): Q.Promise<FolderContent>
    {
       let deferred = Q.defer<FolderContent>();
 
@@ -35,7 +35,7 @@ export class DropBoxRestClient implements ICloudStorageRestClient {
       xhr.open("POST", url, true);
 
       let fileData = {
-        path: path,
+        path: folder.path_lower,
         recursive: false,
         include_media_info: true,
         include_deleted: false,
@@ -52,13 +52,10 @@ export class DropBoxRestClient implements ICloudStorageRestClient {
           // Convert xhr.responseText to array of FolderContent object
           let contents = JSON.parse(xhr.responseText);
 
-          let folderContents: FolderContent = {
-            name: "",
-            path_display: path,
-            children: contents.entries,
-          } as FolderContent;
+          folder.shouldFetchChildren = false;
+          folder.children = contents.entries;
 
-          deferred.resolve(folderContents);
+          deferred.resolve(folder);
         }
         else if (xhr.readyState == 4) {
           deferred.reject(new Error(xhr.responseText));

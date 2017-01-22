@@ -14,9 +14,11 @@ export class ActionsHub {
     
     private _actions: any = Reflux.createActions(
         [
-            "rootFolderChangedAction",
+            "folderSelectionChangedAction",
             "fileUploadedAction",
             "folderContentsChangedAction",
+            "folderExpandedAction",
+            "folderCollapsedAction",
         ]
     );
 
@@ -31,12 +33,22 @@ export class ActionsHub {
     }
 }
 
+export enum ChangeType {
+    FolderSelectionChanged,
+    FolderExpanded,
+    FolderCollapsed,
+    FolderContentsChanged,
+    Unknown,
+}
+
 export class FolderContent {
     name: string;
     path_display: string;
     path_lower: string;
     isFolder: boolean;
     isExpanded: boolean;
+    shouldFetchChildren: boolean;
+    level: number;
     revision: string;
     children: FolderContent[];
 }
