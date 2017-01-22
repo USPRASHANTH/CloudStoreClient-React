@@ -10,7 +10,7 @@ export class AuthenticateComponent extends React.Component<AuthenticateComponent
 
    public render() {
        return (
-          <button onClick={()=>{this.authenticate();}}>
+          <button className={"login-button"} onClick={()=>{this.authenticate();}}>
           Login to Dropbox
           </button>
        );
@@ -21,5 +21,7 @@ export class AuthenticateComponent extends React.Component<AuthenticateComponent
        // Invoke actionCreator.getInitialDropBoxData() to do initial setup.
        // Use hard coded access token.
        this._authenticateActionCreator.getInitialDropBoxData();
+       $(".login-button").addClass("hidden");
+       $(".explorer-view.hidden").removeClass("hidden");
   }
 }

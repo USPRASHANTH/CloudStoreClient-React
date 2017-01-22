@@ -34,6 +34,7 @@
     "treeview-react-bootstrap": "^0.4.6",
     "typed-rest-client": "^0.7.0",
     "typescript-rest": "^0.2.10",
+    "typings": "^2.1.0",
     "web-request": "^1.0.7"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
+    "karma-typescript": "^2.1.6",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.1",
     "tsd": "^0.6.5",
