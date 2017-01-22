@@ -48,6 +48,7 @@ export class ExplorerStore {
             },
             init: function() {
                 let actions = ActionsHub.getInstance().getActions();
+                this.listenTo(actions.folderContentsChangedAction, this.onFolderContentsChangedAction);
                 this.listenTo(actions.folderSelectionChangedAction, this.onFolderSelectionChangedAction);
                 this.listenTo(actions.folderCollapsedAction, this.onFolderCollapsedAction);
                 this.listenTo(actions.folderExpandedAction, this.onFolderExpandedAction);
@@ -55,7 +56,7 @@ export class ExplorerStore {
             updateTreeCache: function(folderContent: FolderContent) {
                 that._treeCache[folderContent.path_lower] = folderContent;
             },
-            onFolderSelectionChangedAction: function(folderContent: FolderContent) {
+            onFolderContentsChangedAction: function(folderContent: FolderContent) {
                 this.updateTreeCache(folderContent);
 
                 // Add contents of the folder to the cache.
@@ -74,12 +75,24 @@ export class ExplorerStore {
                     rootFolder: this.getState().rootFolder,
                     selectedFolder: folderContent,
                     changedFolder: folderContent,
+                    changeType: ChangeType.FolderContentsChanged,
+                } as ExplorerState);
+
+                this.trigger(this.getState());
+            },
+            onFolderSelectionChangedAction: function(folderContent: FolderContent) {
+                // No need to update the cache entry
+                this.setState({
+                    rootFolder: this.getState().rootFolder,
+                    selectedFolder: folderContent,
+                    changedFolder: folderContent,
                     changeType: ChangeType.FolderSelectionChanged,
                 } as ExplorerState);
 
                 this.trigger(this.getState());
             },
             onFolderCollapsedAction: function(folderContent: FolderContent) {
+                // Update the cache entry from expand to collapse
                 this.updateTreeCache(folderContent);
                 this.setState({
                     rootFolder: this.getState().rootFolder,
@@ -91,6 +104,7 @@ export class ExplorerStore {
                 this.trigger(this.getState());
             },
             onFolderExpandedAction: function(folderContent: FolderContent) {
+                // Update the cache entry from collapse to expand
                 this.updateTreeCache(folderContent);
                 this.setState({
                     rootFolder: this.getState().rootFolder,

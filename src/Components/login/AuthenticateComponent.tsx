@@ -2,7 +2,6 @@ import * as React from 'react';
 import { AuthenticateActionCreator } from './../../ActionCreators/AuthenticateActionCreator'
 
 interface AuthenticateComponentProps extends React.Props<AuthenticateComponent> {
-    accessToken: string;
 }
 
 export class AuthenticateComponent extends React.Component<AuthenticateComponentProps, {}> {

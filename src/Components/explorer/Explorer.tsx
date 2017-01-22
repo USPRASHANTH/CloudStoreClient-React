@@ -15,6 +15,13 @@ export var PathComponent = React.createClass({
     onStoreChanged: function(explorerState: ExplorerState) {
       this.setState(explorerState);
     },
+    shouldComponentUpdate: function(previousState: ExplorerState, nextState: ExplorerState) {
+      if (nextState.changeType === ChangeType.FolderSelectionChanged) {
+        return true;
+      }
+
+      return false;
+    },
     render: function() {
         return (
             <div className={"path-component"}>
@@ -25,10 +32,11 @@ export var PathComponent = React.createClass({
 });
 
 export var ExplorerComponent = React.createClass({
+    
     render: function() {
         return (
            <div className={"explorer-view hidden"}>
-           <PathComponent />
+           <PathComponent rootFolder={null} selectedFolder={null} changedFolder={null} changeType={ChangeType.Unknown} />
            <div className="explorer-left-pane">
            <TreeView rootFolder={null} selectedFolder={null} changedFolder={null} changeType={ChangeType.Unknown} />
            </div>
