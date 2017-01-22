@@ -43,10 +43,11 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
     "karma-typescript": "^2.1.6",
+    "karma-typescript-preprocessor": "^0.3.1",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.1",
     "tsd": "^0.6.5",
-    "typescript": "^1.8.9",
+    "typescript": "^1.8.10",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.13",
     "webpack-dev-server": "~1.10.1"

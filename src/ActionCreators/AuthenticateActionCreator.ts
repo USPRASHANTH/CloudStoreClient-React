@@ -20,6 +20,11 @@ export class AuthenticateActionCreator {
         restClient.getFolderContents(rootFolder).then(
             (folderContent: FolderContent) => {
                 let actions = ActionsHub.getInstance().getActions();
+
+                // Raise folderContentsChangedAction since we have fetched the root folder contents. 
+                // Raise folderSelectionChangedAction to select the root folder.
+                // Raise folderExpandedAction to expand the root folder.
+                actions.folderContentsChangedAction(folderContent);
                 actions.folderSelectionChangedAction(folderContent);
                 actions.folderExpandedAction(folderContent);
             }

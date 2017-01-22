@@ -19,6 +19,7 @@ export class ExplorerActionCreator {
         let actions = ActionsHub.getInstance().getActions();
         actions.folderSelectionChangedAction(folder);
 
+        // When a folder is selected, if is not in expanded state, expand it now.
         if (!folder.isExpanded) {
             folder.isExpanded = true;
             actions.folderExpandedAction(folder);
@@ -36,6 +37,7 @@ export class ExplorerActionCreator {
                     (folderContent: FolderContent) => {
                         folderContent.isExpanded = true;
                         let actions = ActionsHub.getInstance().getActions();
+                        actions.folderContentsChangedAction(folderContent);
                         actions.folderExpandedAction(folderContent);
                     }
                 );
@@ -64,6 +66,8 @@ export class ExplorerActionCreator {
             let promise: Q.Promise<FolderContent> = restClient.getFolderContents(folderItem);
             promise.then(
                 (folderContent: FolderContent) => {
+                    let actions = ActionsHub.getInstance().getActions();
+                    actions.folderContentsChangedAction(folderContent);
                     this._invokeFolderSelectionChangedAction(folderContent);
                 },
                 (error: Error) => {

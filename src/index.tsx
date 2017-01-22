@@ -7,9 +7,7 @@ import { ExplorerComponent } from './../src/Components/explorer/Explorer'
 
 ReactDOM.render(
   <div>
-  <AuthenticateComponent 
-      accessToken={""}
-  />
+  <AuthenticateComponent />
   <ExplorerComponent />
   </div>
 
